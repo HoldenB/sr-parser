@@ -2,7 +2,13 @@ package main
 
 ////////////////////////////////////////////////////////////////
 
+type parseStackItem struct {
+	grammarSymbol, stateSymbol string
+}
 
+func (item parseStackItem) String()  string {
+	return item.grammarSymbol + item.stateSymbol
+}
 
 func main() {
 	//reader := bufio.NewScanner(os.Stdin)
