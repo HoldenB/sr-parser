@@ -1,14 +1,7 @@
 package main
 
 func main() {
-	// Test data
 	input := []string{"id", "+", "id", "*", "id"}
-	// input := []string{"id"} // simplest possible grammatical input
-	// input := []string{ "id", "+", "id"};                       // simple grammatical input
-	// input := []string{ "id", "+", "id", "+", "id"};            // left assoc
-	// input := []string{ "(", "id", ")"};                        // parens1
-	// input := []string{"id", "+", "(", "id", "+", "id", ")"} // parens2
-	// input := []string{"id", "+", "id", "*"} // ungrammatical input
 
 	gammer := [][]string{
 		{"E", "->", "E", "+", "T"},

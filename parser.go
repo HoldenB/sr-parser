@@ -92,7 +92,7 @@ func initialize(par *LHS_tree, handler *treeHandler, nlt *NLT) *NLT {
 	return nlt
 }
 
-func (nlt NLT) prinnltee() {
+func (nlt NLT) printTree() {
 	nlt.treeRepr(0)
 }
 
@@ -144,7 +144,7 @@ func (ps *parseStack) repr() string {
 }
 
 type parseTreeInterface interface {
-	prinnltee()
+	printTree()
 	treeRepr(indent int)
 	repr() string
 }
@@ -163,30 +163,30 @@ func (se *entry) repr() string {
 	return se.grammer + se.state
 }
 
-type termSym struct {
-	tsym string
+type termSymbol struct {
+	symbol string
 }
 
-func (ts termSym) prinnltee() {
+func (ts termSymbol) printTree() {
 	ts.treeRepr(0)
 }
 
-func (ts termSym) treeRepr(indent int) {
+func (ts termSymbol) treeRepr(indent int) {
 	a := ""
 	// Indent value spaces
 	for i := 0; i < indent; i++ {
 		a = a + "    "
 	}
-	fmt.Println(a + ts.tsym)
+	fmt.Println(a + ts.symbol)
 }
 
-func construct(a string, ts *termSym) *termSym {
-	ts.tsym = a
+func createtermSymbolbol(a string, ts *termSymbol) *termSymbol {
+	ts.symbol = a
 	return ts
 }
 
-func (ts termSym) repr() string {
-	return ts.tsym
+func (ts termSymbol) repr() string {
+	return ts.symbol
 }
 
 type actionChoice int
@@ -297,9 +297,9 @@ func (p *parser) Initialize(
 	p.parserStack = new(parseStack)
 }
 
-func (p *parser) Prinnltee() {
+func (p *parser) PrintTree() {
 	fmt.Println("Parse Tree: ")
-	p.ts.top().prinnltee()
+	p.ts.top().printTree()
 }
 
 func (p *parser) EvaluateActionChoice() {
@@ -345,7 +345,7 @@ func (p *parser) Parse() {
 
 	if p.ungrammatical == false {
 		fmt.Println()
-		p.Prinnltee()
+		p.PrintTree()
 	}
 }
 
@@ -393,8 +393,8 @@ func (p *parser) Parse1step() {
 		p.newlyPlacedEntry.createEntry(index, p.inputBuffer.first())
 
 		if cmpStr(p.inputBuffer.first(), "id") == true {
-			b := new(termSym)
-			b = construct("id", b)
+			b := new(termSymbol)
+			b = createtermSymbolbol("id", b)
 			p.ts.push(*b)
 		}
 		p.inputBuffer.pop()
@@ -453,10 +453,10 @@ func (p *parser) Parse1step() {
 			fmt.Println(popped.top().grammer)
 
 			a := p.ts.pop()
-			b := new(termSym)
-			b = construct("(", b)
-			c := new(termSym)
-			c = construct(")", c)
+			b := new(termSymbol)
+			b = createtermSymbolbol("(", b)
+			c := new(termSymbol)
+			c = createtermSymbolbol(")", c)
 
 			handler := new(treeHandler)
 			handler.initialize(b)
@@ -478,8 +478,8 @@ func (p *parser) Parse1step() {
 			popped.pop()
 			operator := popped.top().grammer
 
-			b := new(termSym)
-			b = construct(operator, b)
+			b := new(termSymbol)
+			b = createtermSymbolbol(operator, b)
 
 			handler := new(treeHandler)
 			handler.initialize(a)
